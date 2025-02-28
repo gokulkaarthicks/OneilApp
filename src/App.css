@@ -1,20 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Lora:wght@400;600&display=swap');
 
-
+/* Global Styles */
 html, body {
     overflow-x: hidden; /* Prevents horizontal scrolling */
-    max-width: 100vw; /* Ensures the layout stays within the screen */
+    max-width: 100vw; /* Ensures layout stays within the screen */
     font-family: 'Poppins', sans-serif;
     font-weight: 400;
-    color: #222; /* Keeps it readable */
+    color: #222;
+    background-color: #f8f9fa; /* Light background */
+    margin: 0;
+    padding: 0;
 }
 
+/* Main Layout */
 .app-container {
     display: flex;
     flex-direction: row;
     width: 100%;
 }
 
+/* Main Content Area */
 .main-content {
     flex: 1;
     display: flex;
@@ -23,6 +28,7 @@ html, body {
     min-width: 70%;
 }
 
+/* Sidebar */
 .sidebar {
     font-family: 'Poppins', sans-serif;
     width: 250px;
@@ -33,50 +39,79 @@ html, body {
     position: relative;
     right: 0;
     top: 0;
+    transition: transform 0.3s ease-in-out;
 }
 
+/* Map & Visualizations */
 .map-visualization-container {
-    width: calc(100% - 300px); /* Keeps it within the main content, not sidebar */
+    width: calc(100% - 300px);
     max-width: 100%;
-    margin-right: auto; /* Prevents overlap with the sidebar */
-    margin-left: 0; /* Ensures alignment to the left */
+    margin-right: auto;
+    margin-left: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+/* Map Wrapper */
 .map-wrapper {
     width: 100%;
     max-width: 100%;
     height: 55vh;
     overflow: hidden;
     border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Map Container */
 .map-container {
     width: 100%;
     height: 100%;
 }
 
+/* Visualizations */
 .visualizations {
-    /* width: calc(100% - 300px);
-    max-width: calc(100% - 300px);*/
     width: 100%;
     display: flex;
     justify-content: space-evenly;
-    margin-top: -10px;
     gap: 15px;
     padding: 10px;
+    flex-wrap: wrap;
 }
-
 
 .visualizations div {
     width: 30%;
-    min-width: 200px;
-    height: 300px;
+    min-width: 250px;
+    height: 280px;
+    background: rgba(255, 235, 235, 0.8);
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(164, 44, 44, 0.3);
+    transition: transform 0.3s ease-in-out;
 }
 
-/* Desktop Layout (Sidebar on Right) */
+.visualizations div:hover {
+    transform: scale(1.05);
+}
+
+/* Sidebar Toggle Button (Mobile Only) */
+.sidebar-toggle {
+    display: none;
+    background: #990000;
+    color: white;
+    font-size: 16px;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 90%;
+    max-width: 400px;
+    margin: 10px auto;
+    text-align: center;
+}
+
+/* Desktop Layout */
 @media (min-width: 1024px) {
     .main-content {
         flex: 1;
@@ -106,35 +141,33 @@ html, body {
     }
 
     .sidebar {
-        display: none; /* Hide sidebar on smaller screens */
-    }
-
-    .mobile-filter-container {
+        display: none;
+        position: fixed;
         width: 100%;
-        text-align: center;
-        padding: 10px;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        z-index: 1000;
+        background: rgba(153, 0, 0, 0.95);
+        transition: transform 0.3s ease-in-out;
     }
 
-    .mobile-filter-button {
-        background: #990000;
-        color: white;
-        font-size: 16px;
-        padding: 12px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        width: 90%;
-        max-width: 400px;
-        margin: 10px auto;
+    .sidebar.show {
+        display: block;
+        transform: translateX(0);
+    }
+
+    .sidebar-toggle {
         display: block;
     }
 
     .map-wrapper {
         width: 90%;
-        max-width: 100vw; /* Ensures it doesn't exceed screen */
-        height: 60vh; /* Adjusted height */
-        margin: 0 auto; /* Centers it */
+        max-width: 100vw;
+        height: 60vh;
+        margin: 0 auto;
     }
+
     .map-visualization-container {
         width: 95%;
         max-width: 95vw;
@@ -142,20 +175,28 @@ html, body {
     }
 
     .visualizations {
-        flex-direction: column;
-        align-items: center;
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px;
         width: 100%;
+        max-width: 100%;
     }
-    /* .visualizations {
-        width: 90%;
-        max-width: 90vw;
-        flex-direction: column;
-        align-items: center;
-        margin: 10px auto;
-    } */
 
     .visualizations div {
         width: 100%;
         max-width: 400px;
+    }
+    
+    .visualizations .chart-container {
+        flex: 1 1 30%;
+        min-width: 250px;
+        max-width: 400px; /* Ensures responsiveness */
+        height: 220px; /* Reduced from default */
+    }
+
+    .chart-container canvas {
+        max-height: 180px !important; /* Reduces height of chart */
     }
 }

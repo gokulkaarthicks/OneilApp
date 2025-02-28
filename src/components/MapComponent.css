@@ -1,24 +1,22 @@
 .map-wrapper {
-    width: calc(100% - 300px); /* Leaves space for the sidebar */
-    max-width: calc(100% - 300px); /* Ensures it does not exceed available space */
-    height: 75vh;
-    margin: 20px 20px 20px 0; /* Adds space between the map and the sidebar */
-    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
+    height: 60vh;
     border-radius: 10px;
-    position: relative;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .map-container {
     width: 100%;
     height: 100%;
+    border-radius: 10px;
 }
 
-/* Mobile View: Make sure the map fits properly */
-@media (max-width: 1024px) {
+/* Ensuring responsive map size */
+@media (max-width: 768px) {
     .map-wrapper {
-        width: 90%;
-        max-width: 90vw;
-        margin: 10px auto;
+        height: 50vh;
     }
 }
-

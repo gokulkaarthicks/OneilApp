@@ -5,20 +5,39 @@ import "./PieChartComponent.css";
 
 Chart.register(ArcElement, Tooltip, Legend);
 
-const PieChartComponent = ({ data }) => {
+const PieChartComponent = ({ data, title }) => {
     const chartData = {
         labels: Object.keys(data),
         datasets: [
             {
                 data: Object.values(data),
-                backgroundColor: ["#ffb347", "#ff7675", "#6ab04c"], // Orange, Red, Green
-                borderColor: ["#e67e22", "#d63031", "#27ae60"], // Darker border for depth
+                backgroundColor: ["#FF4500", "#1E90FF", "#32CD32", "#FFD700", "#FF69B4"],
                 borderWidth: 2,
             },
         ],
     };
 
-    return <div className="chart-container"><Pie data={chartData} /></div>;
+    const options = {
+        maintainAspectRatio: false, // Allows controlled height
+        responsive: true,
+        plugins: {
+            legend: {
+                position: "bottom",
+                labels: {
+                    font: { size: 12 },
+                },
+            },
+        },
+    };
+
+    return (
+        <div className="chart-container">
+            <h3>{title}</h3>
+            <div style={{ width: "100%", height: "250px" }}>
+                <Pie data={chartData} options={options} />
+            </div>
+        </div>
+    );
 };
 
 export default PieChartComponent;

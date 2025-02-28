@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/OneilApp/static/css/main.4aa6bcf2.css",
+    "main.js": "/OneilApp/static/js/main.d016f033.js",
+    "index.html": "/OneilApp/index.html",
+    "main.4aa6bcf2.css.map": "/OneilApp/static/css/main.4aa6bcf2.css.map",
+    "main.d016f033.js.map": "/OneilApp/static/js/main.d016f033.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4aa6bcf2.css",
+    "static/js/main.d016f033.js"
+  ]
+}
