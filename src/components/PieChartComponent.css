@@ -1,0 +1,19 @@
+.chart-container {
+    background: rgba(255, 220, 220, 0.8); /* Soft light red */
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 4px 8px rgba(255, 99, 71, 0.2); /* Light red shadow */
+
+
+    width: calc(100% - 300px); /* Leaves space for the sidebar */
+    max-width: calc(100% - 300px); /* Ensures it does not exceed available space */
+    
+    
+    
+    margin: 15px auto;
+    transition: transform 0.3s ease-in-out;
+}
+
+.chart-container:hover {
+    transform: scale(1.05);
+}
