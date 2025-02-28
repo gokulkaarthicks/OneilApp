@@ -16,14 +16,18 @@
     "@babel/preset-react": "^7.23.0",
     "babel-loader": "^9.1.2",
     "css-loader": "^6.11.0",
+    "gh-pages": "^6.3.0",
     "html-webpack-plugin": "^5.5.0",
     "style-loader": "^3.3.3",
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.0"
   },
+  "homepage": "https://gokulkaarthicks.github.io/OneilApp",
   "scripts": {
-    "start": "webpack serve --open --mode development",
-    "build": "webpack --mode production"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   }
 }
