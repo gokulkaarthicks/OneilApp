@@ -65,23 +65,26 @@ const statesList = ["All", ...states];
 const mineralsList = ["All", ...new Set(coalMinesData.map(mine => mine.mineral))];
 const companiesList = ["All", ...new Set(coalMinesData.map(mine => mine.company))];
 const projectsList = ["All", ...projects];
+const projectNamesList = ["All", ...coalMinesData.map(mine => mine.name)]; // New project name filter
 
 function App() {
     const [filters, setFilters] = useState({
         state: "All",
         mineral: "All",
         company: "All",
-        project: "All"
+        project: "All",
+        projectName: "All", // Added project name filter
     });
 
     const [searchQuery, setSearchQuery] = useState("");
 
-    // **📌 Filtering mines based on user selection**
+    // **🛠 Update the filtering function to support multi-select**
     const filteredMines = coalMinesData.filter(mine => 
-        (filters.state === "All" || mine.state === filters.state) &&
-        (filters.mineral === "All" || mine.mineral === filters.mineral) &&
-        (filters.company === "All" || mine.company === filters.company) &&
-        (filters.project === "All" || mine.project === filters.project) &&
+        (filters.state === "All" || filters.state.length === 0 || filters.state.includes(mine.state)) &&
+        (filters.mineral === "All" || filters.mineral.length === 0 || filters.mineral.includes(mine.mineral)) &&
+        (filters.company === "All" || filters.company.length === 0 || filters.company.includes(mine.company)) &&
+        (filters.project === "All" || filters.project.length === 0 || filters.project.includes(mine.project)) &&
+        (filters.projectName === "All" || filters.projectName.length === 0 || filters.projectName.includes(mine.name)) &&
         (searchQuery === "" || mine.name.toLowerCase().includes(searchQuery.toLowerCase()))
     );
 
@@ -108,6 +111,7 @@ function App() {
                 minerals={mineralsList} 
                 companies={companiesList} 
                 projects={projectsList} 
+                projectNames={projectNamesList} // Pass project names to Sidebar
                 filters={filters} 
                 setFilters={setFilters} 
             />
