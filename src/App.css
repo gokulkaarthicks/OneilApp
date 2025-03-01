@@ -78,6 +78,8 @@ html, body {
     gap: 15px;
     padding: 10px;
     flex-wrap: wrap;
+    position: relative;
+    top: 20px;
 }
 
 .visualizations div {

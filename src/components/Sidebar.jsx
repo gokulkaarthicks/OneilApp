@@ -48,13 +48,12 @@ const Sidebar = ({ states, minerals, companies, projects, filters, setFilters })
         </div>
     );
 
-    // Function to render each filter dropdown with label
     function renderFilter(label, name, options) {
         return (
             <div className="filter-group">
                 <label>{label}</label>
                 <select name={name} onChange={handleFilterChange} value={filters[name]}>
-                    <option value="All">All {label}s</option>
+                    <option value="All">{label}</option>
                     {options.map((option, index) => (
                         <option key={index} value={option}>{option}</option>
                     ))}
