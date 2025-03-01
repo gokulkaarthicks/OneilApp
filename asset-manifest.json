@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/OneilApp/static/css/main.f1ce9196.css",
-    "main.js": "/OneilApp/static/js/main.ea248da4.js",
+    "main.css": "/OneilApp/static/css/main.d97c813b.css",
+    "main.js": "/OneilApp/static/js/main.e7c63681.js",
     "index.html": "/OneilApp/index.html",
-    "main.f1ce9196.css.map": "/OneilApp/static/css/main.f1ce9196.css.map",
-    "main.ea248da4.js.map": "/OneilApp/static/js/main.ea248da4.js.map"
+    "main.d97c813b.css.map": "/OneilApp/static/css/main.d97c813b.css.map",
+    "main.e7c63681.js.map": "/OneilApp/static/js/main.e7c63681.js.map"
   },
   "entrypoints": [
-    "static/css/main.f1ce9196.css",
-    "static/js/main.ea248da4.js"
+    "static/css/main.d97c813b.css",
+    "static/js/main.e7c63681.js"
   ]
 }
