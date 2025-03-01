@@ -60,3 +60,73 @@
 .map-search-bar::placeholder {
     color: #666;
 }
+
+/* Heatmap Toggle Positioned Over the Map */
+.heatmap-toggle {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    z-index: 1000; /* Ensures it's above the map */
+    background: rgba(255, 255, 255, 0.9);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+/* Switch slider */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 34px;
+    height: 18px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 20px;
+    transition: 0.4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: #ff5733;
+}
+
+input:checked + .slider:before {
+    transform: translateX(16px);
+}
+
+/* Toggle Label */
+.toggle-label {
+    font-size: 12px;
+    color: black;
+    font-weight: bold;
+}

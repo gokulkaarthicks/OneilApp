@@ -6,23 +6,65 @@ import LineChartComponent from "./components/LineChartComponent";
 import Sidebar from "./components/Sidebar";
 import "./App.css";
 
-// Dummy data with diversity
-const coalMinesData = [
-    { name: "Mine A", lat: 37.7749, lng: -122.4194, state: "California", mineral: "Coal", company: "MiningCorp", project: "Exploration", type: "Active", yearOpened: 2015 },
-    { name: "Mine B", lat: 34.0522, lng: -118.2437, state: "California", mineral: "Gold", company: "GoldDiggers Ltd.", project: "Extraction", type: "Abandoned", yearOpened: 2005 },
-    { name: "Mine C", lat: 40.7128, lng: -74.0060, state: "New York", mineral: "Iron", company: "Steel Industries", project: "Processing", type: "Reclaimed", yearOpened: 2010 },
-    { name: "Mine D", lat: 41.8781, lng: -87.6298, state: "Illinois", mineral: "Copper", company: "MetalX Corp", project: "Exploration", type: "Active", yearOpened: 2018 },
-    { name: "Mine E", lat: 39.7392, lng: -118.9903, state: "Colorado", mineral: "Coal", company: "MiningCorp", project: "Refining", type: "Abandoned", yearOpened: 2000 },
-    { name: "Mine F", lat: 35.6895, lng: -105.9378, state: "New Mexico", mineral: "Silver", company: "SilverStream", project: "Extraction", type: "Active", yearOpened: 2021 },
-    { name: "Mine G", lat: 32.7767, lng: -96.7970, state: "Texas", mineral: "Uranium", company: "Nuclear Resources", project: "Processing", type: "Reclaimed", yearOpened: 2012 },
-    { name: "Mine H", lat: 36.7783, lng: -119.4179, state: "California", mineral: "Platinum", company: "MetalWorks", project: "Exploration", type: "Active", yearOpened: 2016 },
-];
+// **📍 Define approximate lat/lng boundaries for each state**
+const stateCoordinates = {
+    "California": { lat: [32.5, 42.0], lng: [-124.4, -114.1] },
+    "Nevada": { lat: [35.0, 42.0], lng: [-120.0, -114.0] },
+    "Arizona": { lat: [31.3, 37.0], lng: [-114.8, -109.0] },
+    "Texas": { lat: [25.8, 36.5], lng: [-106.6, -93.5] },
+    "Colorado": { lat: [37.0, 41.0], lng: [-109.0, -102.0] },
+    "New Mexico": { lat: [31.3, 37.0], lng: [-109.0, -103.0] },
+    "Montana": { lat: [44.4, 49.0], lng: [-116.0, -104.0] },
+    "Wyoming": { lat: [41.0, 45.0], lng: [-111.0, -104.0] },
+    "Oregon": { lat: [42.0, 46.3], lng: [-124.6, -116.5] },
+    "Utah": { lat: [37.0, 42.0], lng: [-114.1, -109.0] },
+};
+
+// Fixed lists for filtering
+const states = Object.keys(stateCoordinates);
+const minerals = ["Gold", "Coal", "Copper", "Silver", "Uranium", "Iron", "Zinc", "Nickel", "Platinum", "Lithium"];
+const companies = ["MiningCorp", "GoldDiggers Ltd.", "MetalX Corp", "Steel Industries", "SilverStream", "RefineryX", "Nuclear Resources", "GeoMines", "DeepDrill Inc.", "Earth Extractors"];
+const projects = ["Exploration", "Extraction", "Processing", "Refining", "Surveying"];
+const types = ["Active", "Abandoned", "Reclaimed"];
+
+// **📌 Function to generate a location within the state's boundary**
+const generateLocation = (state) => {
+    if (!stateCoordinates[state]) return { lat: 39.5, lng: -98.35 }; // Default to central U.S. if state is missing
+    const { lat, lng } = stateCoordinates[state];
+    return {
+        lat: lat[0] + Math.random() * (lat[1] - lat[0]),
+        lng: lng[0] + Math.random() * (lng[1] - lng[0]),
+    };
+};
+
+// **📌 Generate 100 diverse mining projects with realistic locations**
+const generateMiningData = () => {
+    let miningData = [];
+    for (let i = 1; i <= 100; i++) {
+        const state = states[Math.floor(Math.random() * states.length)];
+        const location = generateLocation(state);
+        miningData.push({
+            name: `Mine ${i}`,
+            lat: location.lat,
+            lng: location.lng,
+            state: state,
+            mineral: minerals[Math.floor(Math.random() * minerals.length)],
+            company: companies[Math.floor(Math.random() * companies.length)],
+            project: projects[Math.floor(Math.random() * projects.length)],
+            type: types[Math.floor(Math.random() * types.length)],
+            yearOpened: 1990 + Math.floor(Math.random() * 35), // Random year from 1990 to 2024
+        });
+    }
+    return miningData;
+};
+
+const coalMinesData = generateMiningData();
 
 // Unique filter options
-const states = ["All", ...new Set(coalMinesData.map(mine => mine.state))];
-const minerals = ["All", ...new Set(coalMinesData.map(mine => mine.mineral))];
-const companies = ["All", ...new Set(coalMinesData.map(mine => mine.company))];
-const projects = ["All", "Exploration", "Extraction", "Processing", "Refining", "Surveying"]; // Fixed categories
+const statesList = ["All", ...states];
+const mineralsList = ["All", ...new Set(coalMinesData.map(mine => mine.mineral))];
+const companiesList = ["All", ...new Set(coalMinesData.map(mine => mine.company))];
+const projectsList = ["All", ...projects];
 
 function App() {
     const [filters, setFilters] = useState({
@@ -34,7 +76,7 @@ function App() {
 
     const [searchQuery, setSearchQuery] = useState("");
 
-    // Filter mines based on selection & search query
+    // **📌 Filtering mines based on user selection**
     const filteredMines = coalMinesData.filter(mine => 
         (filters.state === "All" || mine.state === filters.state) &&
         (filters.mineral === "All" || mine.mineral === filters.mineral) &&
@@ -43,19 +85,17 @@ function App() {
         (searchQuery === "" || mine.name.toLowerCase().includes(searchQuery.toLowerCase()))
     );
 
-    // **Bar Chart Data:** Number of mines per mineral type
+    // **📊 Data for Visualizations**
     const mineralsCount = {};
     filteredMines.forEach(mine => {
         mineralsCount[mine.mineral] = (mineralsCount[mine.mineral] || 0) + 1;
     });
 
-    // **Pie Chart Data:** Distribution by project type
     const projectsCount = {};
     filteredMines.forEach(mine => {
         projectsCount[mine.project] = (projectsCount[mine.project] || 0) + 1;
     });
 
-    // **Line Chart Data:** Mines opened per year (historical trend)
     const mineTrends = {};
     filteredMines.forEach(mine => {
         mineTrends[mine.yearOpened] = (mineTrends[mine.yearOpened] || 0) + 1;
@@ -64,10 +104,10 @@ function App() {
     return (
         <div className="app-container">
             <Sidebar 
-                states={states} 
-                minerals={minerals} 
-                companies={companies} 
-                projects={projects} 
+                states={statesList} 
+                minerals={mineralsList} 
+                companies={companiesList} 
+                projects={projectsList} 
                 filters={filters} 
                 setFilters={setFilters} 
             />
