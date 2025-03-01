@@ -1,2 +1,1 @@
-<<<<<<< HEA
 # ONEILAPP
